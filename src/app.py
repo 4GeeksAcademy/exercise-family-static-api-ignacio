@@ -58,15 +58,14 @@ def get_single_member(member_id):
             return jsonify(member), 200
         else:
             return jsonify({"error": "Member not found"}), 400
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
 
 @app.route('/members', methods=['POST'])
 def create_member():
     try:
         if not request.is_json:
             return jsonify({"error": "Request must be JSON"}), 400
-        
         member_data = request.get_json()
         
         required_fields = ["first_name", "age", "lucky_numbers"]
@@ -89,8 +88,8 @@ def create_member():
         else:
             return jsonify({"error": "Failed to add member"}), 400
             
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
 
 @app.route('/members/<int:member_id>', methods=['DELETE'])
 def delete_single_member(member_id):
@@ -101,8 +100,8 @@ def delete_single_member(member_id):
         jackson_family.delete_member(member_id)
         return jsonify({"done": True}), 200
     
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
 
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))
